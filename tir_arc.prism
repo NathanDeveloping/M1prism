@@ -1,0 +1,36 @@
+dtmc
+module Dmitry
+	scoreD: [0..3];
+	pretD : bool;
+	[initD] pretD=false -> (pretD'=true);
+	[tirD] pretD=true -> 1/10 : (scoreD'=3) & (pretD'=false) + 1/6 : (scoreD'=2) & (pretD'=false) + 1/4 : (scoreD'=1) & (pretD'=false) + (1-(1/10+1/6+1/4)) : (scoreD'=0) & (pretD'=false);
+endmodule
+
+module Brigitte
+	scoreB: [0..3];
+	pretB : bool;
+	rateB: bool init false;
+	[initB] pretB=false -> (pretB'=true);
+	[tirB] pretB= true & !rateB -> 1/8 : (scoreB' = 3) & (pretB'=false) + 1/4 : (scoreB' = 2) & (pretB'=false) + 1/2: (scoreB'= 1) & (pretB'=false) + (1-(1/8+1/4+1/2)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false);
+	[tirB] pretB= true & rateB -> 1/16 : (scoreB' = 3) & (rateB'=false) & (pretB'=false) + 1/8 : (scoreB' = 2) & (rateB'=false) & (pretB'=false) + 1/4: (scoreB'= 1) & (rateB'=false) & (pretB'=false) + (1-(1/16+1/8+1/4)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false);
+endmodule
+
+
+module Marion
+	scoreM: [0..3];
+	pretM : bool;
+	nbTirsM: [0..4];
+	[initM] pretM=false -> (pretM'=true);
+	[tirM] pretM=true & nbTirsM < 4 -> 1/16 : (scoreM' = 3) & (pretM'=false) & (nbTirsM' = nbTirsM+1) + 1/6 : (scoreM' = 2) & (pretM'=false) & (nbTirsM' = nbTirsM+1) + 3/16 : (scoreM'= 1) & (pretM'=false) & (nbTirsM' = nbTirsM+1) + (1-(1/16+1/6+3/16)) : (scoreM' = 0) & (pretM'=false) & (nbTirsM' = nbTirsM+1) ;
+	[tirM] pretM=true & nbTirsM >= 4 -> 1/8: (scoreM' = 3) & (pretM'=false) + 1/3 : (scoreM' = 2) & (pretM'=false) + 3/8 : (scoreM'= 1) & (pretM'=false) + (1-(1/8+1/3+3/8)) : (scoreM' = 0) & (pretM'=false);
+endmodule
+
+
+module Horatius
+	scoreH: [0..3];
+	pretH : bool;
+	nbTirsH: [0..4];
+	[initH] pretH=false -> (pretH'=true);
+	[tirH] pretH=true & nbTirsH != 4 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) + 3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1);
+	[tirH] pretH=true & nbTirsH >= 4 -> 1/8 : (scoreH' = 3) + 7/8 : (scoreH' = 0);
+endmodule

@@ -1,0 +1,8 @@
+P<.1 [detenteur != 4 U detenteur = 3]
+
+P=? [detenteur!=3 U detenteur=4]
+
+S=? [ detenteur = 2 ]
+
+S=? [detenteur=2 | detenteur=3]
+
