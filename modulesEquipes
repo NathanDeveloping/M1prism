@@ -1,10 +1,7 @@
-dtmc
-const int k;
-
 module Brigitte
 	scoreB: [0..3];
 	nbTirsB : [0..100] init 0;
-	pretB : bool init true;
+	pretB : bool;
 	rateB: bool init false;
 	[initB] pretB=false & pretM=false & nbTirsB < 100  -> 1/2 : (pretB'=true) +
 								1/2 : (pretB'=false);
@@ -36,13 +33,3 @@ module Marion
 						3/8 : (scoreM'= 1) & (pretM'=false) & (nbTirsM' = nbTirsM+1) & (rateM'=false) +
 						(1-(1/8+1/3+3/8)) : (scoreM' = 0) & (pretM'=false) & (nbTirsM' = nbTirsM+1) & (rateM'=true) ;
 endmodule
-
-module verif
-	scoreTotal:[0..1000];
-	[initB] true & scoreTotal<=997-> (scoreTotal' = scoreTotal + scoreB);
-	[initM] true & scoreTotal<=997-> (scoreTotal' = scoreTotal + scoreM);
-endmodule
-
-rewards
-	[initB] true : scoreTotal;
-endrewards
