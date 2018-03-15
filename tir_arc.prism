@@ -14,7 +14,7 @@ module Brigitte
 								1/2: (scoreB'= 1) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
 								(1-(1/8+1/4+1/2)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false) & (nbTirsB'=nbTirsB+1) ;
 
-	[tirB] pretB= true & rateB & rateM & nbTirsB < 100  -> 1/16 : (scoreB' = 3) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
+	[tirB] pretB= true & (rateB | rateM) & nbTirsB < 100  -> 1/16 : (scoreB' = 3) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
 								1/8 : (scoreB' = 2) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
 								1/4: (scoreB'= 1) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
 								(1-(1/16+1/8+1/4)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false) & (nbTirsB'=nbTirsB+1) ;
@@ -40,11 +40,6 @@ module Marion
 									(1-(1/8+1/3+3/8)) : (scoreM' = 0) & (pretM'=false) & (nbTirsM' = nbTirsM+1) & (rateM'=true) ;
 endmodule
 
-//module verif
-//	scoreTotal:[0..1000];
-//	[initB] true & scoreTotal<=997-> (scoreTotal' = scoreTotal + scoreB);
-//	[initM] true & scoreTotal<=997-> (scoreTotal' = scoreTotal + scoreM);
-//endmodule
 
 rewards
 	[initB] true : scoreB;
