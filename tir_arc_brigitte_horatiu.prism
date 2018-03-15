@@ -1,0 +1,54 @@
+dtmc
+const int k;
+
+module Brigitte
+	scoreB: [0..3];
+	nbTirsB : [0..100] init 0;
+	pretB : bool init true;
+	rateB: bool init false;
+	[initB] pretB=false & pretH=false & nbTirsB < 100  -> 1/2 : (pretB'=true) +
+								1/2 : (pretB'=false);
+
+	[tirB] pretB= true & !rateB & !rateH & nbTirsB < 100  -> 1/8 : (scoreB' = 3) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
+								1/4 : (scoreB' = 2) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
+								1/2: (scoreB'= 1) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
+								(1-(1/8+1/4+1/2)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false) & (nbTirsB'=nbTirsB+1) ;
+
+	[tirB] pretB= true & (rateB | rateH) & nbTirsB < 100  -> 1/16 : (scoreB' = 3) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
+								1/8 : (scoreB' = 2) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) + 
+								1/4: (scoreB'= 1) & (rateB'=false) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
+								(1-(1/16+1/8+1/4)) : (scoreB' = 0) & (rateB'=true) & (pretB'=false) & (nbTirsB'=nbTirsB+1) ;
+endmodule
+
+module Horatiu
+	scoreH: [0..3];
+	pretH : bool;
+	nbTirsH: [0..100] init 0;
+	rateH: bool init false;
+	[initH] pretH=false & nbTirsH < 100 -> 1/2 : (pretH'=true) +
+								1/2 : (pretH'=false);
+	[tirH] pretH=true & nbTirsH != 4 & nbTirsH < 100 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) +
+									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false);
+
+	[tirH] pretH=true & nbTirsH >= 4 & nbTirsH < 100 & fatigueH -> 1/8 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false)+ 
+									7/8 : (scoreH' = 0) & (nbTirsH'= nbTirsH + 1) & (pretH'=false);
+
+	[tirH] pretH=true & nbTirsH >= 4 & nbTirsH < 100 & !fatigueH -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) +
+									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false);
+
+endmodule
+
+module tirReussi
+	fatigueH : bool init false;
+	tirsReussisH: [0..4] init 0;
+	tirsReussisB: [0..4] init 0;
+	[tirH] tirsReussisH <4 & !rateH -> (tirsReussisH'=tirsReussisH+1);
+	[tirH] tirsReussisH = 4 -> (fatigueH' = true) & (tirsReussisH'=0);
+	[tirB] tirsReussisB <4  & !rateB -> (tirsReussisB'=tirsReussisB+1);
+	[tirB] tirsReussisB = 4 -> (fatigueH' = false)& (tirsReussisB'=0);
+endmodule
+
+rewards
+	[initB] true : scoreB;
+	[initH] true : scoreH;
+endrewards

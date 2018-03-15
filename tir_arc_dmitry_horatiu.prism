@@ -1,0 +1,46 @@
+dtmc
+const int k;
+
+module Dmitry
+	scoreD: [0..3];
+	pretD : bool;
+	nbTirsD : [0..100] init 0;
+	rateD : bool init false;
+	[initD] pretD=false & pretH=false & nbTirsD < 100 -> 1/2 : (pretD'=true) + 1/2 : (pretD'=false);
+	[tirD] pretD=true & nbTirsD < 100 -> 1/10 : (scoreD'=3) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
+				1/6 : (scoreD'=2) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
+				1/4 : (scoreD'=1) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
+				(1-(1/10+1/6+1/4)) : (scoreD'=0) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=true);
+endmodule
+
+module Horatiu
+	scoreH: [0..3];
+	pretH : bool;
+	nbTirsH: [0..100] init 0;
+	rateH: bool init false;
+	[initH] pretH=false & pretD=false & nbTirsH < 100 -> 1/2 : (pretH'=true) + 1/2 : (pretH'=false);
+	[tirH] pretH=true & nbTirsH != 4 & nbTirsH < 100 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) +
+									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false);
+
+	[tirH] pretH=true & nbTirsH >= 4 & nbTirsH < 100 & fatigueH -> 1/8 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false)+ 
+									7/8 : (scoreH' = 0) & (nbTirsH'= nbTirsH + 1) & (pretH'=false);
+
+	[tirH] pretH=true & nbTirsH >= 4 & nbTirsH < 100 & !fatigueH -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) +
+									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false);
+
+endmodule
+
+module tirReussi
+	fatigueH : bool init false;
+	tirsReussisH: [0..4] init 0;
+	tirsReussisB: [0..4] init 0;
+	[tirH] tirsReussisH <4 & !rateH -> (tirsReussisH'=tirsReussisH+1);
+	[tirH] tirsReussisH = 4 -> (fatigueH' = true) & (tirsReussisH'=0);
+	[tirD] tirsReussisB <4  & !rateD -> (tirsReussisB'=tirsReussisB+1);
+	[tirD] tirsReussisB = 4 -> (fatigueH' = false)& (tirsReussisB'=0);
+endmodule
+
+rewards
+	[initD] true : scoreD;
+	[initH] true : scoreH;
+endrewards
