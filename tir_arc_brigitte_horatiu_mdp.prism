@@ -1,4 +1,4 @@
-dtmc
+mdp
 const int k;
 
 module Brigitte
@@ -6,8 +6,8 @@ module Brigitte
 	nbTirsB : [0..100] init 0;
 	pretB : bool init true;
 	rateB: bool init false;
-	[initB] pretB=false & pretH=false & nbTirsB < 100  -> 1/2 : (pretB'=true) +
-								1/2 : (pretB'=false);
+	[initB] pretB=false & pretH=false & nbTirsB < 100  -> (pretB'=true);
+	[initB] pretB=false & pretH=false & nbTirsB < 100  -> (pretB'=false);
 
 	[tirB] pretB= true & !rateB & !rateH & nbTirsB < 100  -> 1/8 : (scoreB' = 3) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
 								1/4 : (scoreB' = 2) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
@@ -25,7 +25,10 @@ module Horatiu
 	pretH : bool;
 	nbTirsH: [0..100] init 0;
 	rateH: bool init false;
-	[initH] pretH=false & pretB=false & nbTirsH < 100 -> 1/2 : (pretH'=true) + 1/2 : (pretH'=false);
+
+	[initH] pretH=false & pretB=false & nbTirsH < 100 -> (pretH'=true);
+	[initH] pretH=false & pretB=false & nbTirsH < 100 -> (pretH'=false);
+
 	[tirH] pretH=true & nbTirsH != 4 & nbTirsH < 100 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) & (rateH'=false) +
 									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false) & (rateH'=true);
 

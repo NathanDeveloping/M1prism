@@ -2,9 +2,19 @@
 <!DOCTYPE chartFormat SYSTEM "chartformat.dtd">
 <chartFormat graphTitle="" legendFontColourB="0" legendFontColourG="0" legendFontColourR="0" legendFontName="SansSerif" legendFontSize="11" legendFontStyle="0" legendPosition="right" legendVisible="true" titleFontColourB="0" titleFontColourG="0" titleFontColourR="0" titleFontName="SansSerif" titleFontSize="14" titleFontStyle="0" versionString="4.4">
 <layout/>
-<axis autoscale="true" heading="nombre de tirs, k" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
-<axis autoscale="true" heading="Score total" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
-<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="Brigitte-Marion" seriesShape="circle" showLines="true" showPoints="true">
+<axis autoscale="true" heading="k" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<axis autoscale="true" heading="Expected reward" headingFontColourB="0" headingFontColourG="0" headingFontColourR="0" headingFontName="SansSerif" headingFontSize="12" headingFontStyle="0" logBase="10.0" logStyle="1" logarithmic="false" majorColourB="204" majorColourG="204" majorColourR="204" majorGridInterval="0.2" maxValue="1.0" maximumPower="1.0" minValue="0.0" minimumPower="0.0" numberFontColourB="0" numberFontColourG="0" numberFontColourR="0" numberFontName="SansSerif" numberFontSize="12" numberFontStyle="0" showMajor="true"/>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="255" seriesColourG="0" seriesColourR="0" seriesHeading="Brigitte-Horatiu" seriesShape="circle" showLines="true" showPoints="true">
+<point x="3.0" y="3.08203125"/>
+<point x="4.0" y="4.8328857421875"/>
+<point x="5.0" y="6.549549102783203"/>
+<point x="6.0" y="8.218816637992859"/>
+<point x="7.0" y="9.847210127860308"/>
+<point x="8.0" y="11.44526104151737"/>
+<point x="9.0" y="13.02229240296947"/>
+<point x="10.0" y="14.5851607235453"/>
+</graph>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="Brigitte-Marion" seriesShape="square" showLines="true" showPoints="true">
 <point x="3.0" y="3.061197916666667"/>
 <point x="4.0" y="4.805867513020834"/>
 <point x="5.0" y="6.534636179606121"/>
@@ -14,24 +24,14 @@
 <point x="9.0" y="15.598674554945184"/>
 <point x="10.0" y="18.05512758088591"/>
 </graph>
-<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="127" seriesColourR="0" seriesHeading="Horatiu-Dmitry" seriesShape="square" showLines="true" showPoints="true">
-<point x="3.0" y="2.041664527965677"/>
-<point x="4.0" y="3.4708285917660717"/>
-<point x="5.0" y="5.0020788396623495"/>
-<point x="6.0" y="6.584365256880919"/>
-<point x="7.0" y="8.190091122221627"/>
-<point x="8.0" y="9.802064110727853"/>
-<point x="9.0" y="11.409409158949014"/>
-<point x="10.0" y="13.006402230751025"/>
-</graph>
-<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="Brigitte-Horatiu" seriesShape="triangle" showLines="true" showPoints="true">
-<point x="3.0" y="2.8576388888888884"/>
-<point x="4.0" y="4.835937499999999"/>
-<point x="5.0" y="6.8286012249228385"/>
-<point x="6.0" y="8.802062611521025"/>
-<point x="7.0" y="10.750840421239696"/>
-<point x="8.0" y="12.622283241767338"/>
-<point x="9.0" y="14.414671859456917"/>
-<point x="10.0" y="16.130879783704543"/>
+<graph lineStyle="normal" lineWidth="1.0" seriesColourB="0" seriesColourG="0" seriesColourR="255" seriesHeading="Dmitry-Horatiu" seriesShape="triangle" showLines="true" showPoints="true">
+<point x="3.0" y="2.0416666666666665"/>
+<point x="4.0" y="3.470833333333333"/>
+<point x="5.0" y="5.002083333333333"/>
+<point x="6.0" y="6.584375"/>
+<point x="7.0" y="8.192141723632812"/>
+<point x="8.0" y="9.812480036417643"/>
+<point x="9.0" y="11.438739363352457"/>
+<point x="10.0" y="13.067329235871634"/>
 </graph>
 </chartFormat>

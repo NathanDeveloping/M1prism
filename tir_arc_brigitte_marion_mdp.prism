@@ -1,24 +1,13 @@
-dtmc
+mdp
 const int k;
-
-module Dmitry
-	scoreD: [0..3];
-	pretD : bool;
-	nbTirsD : [0..100] init 0;
-	[initD] pretD=false & pretH=false & nbTirsD < 100 -> 1/2 : (pretD'=true) + 1/2 : (pretH'=true);
-	[tirD] pretD=true & nbTirsD < 100 -> 1/10 : (scoreD'=3) & (pretD'=false) & (nbTirsD'=nbTirsD+1) + 
-				1/6 : (scoreD'=2) & (pretD'=false) & (nbTirsD'=nbTirsD+1) + 
-				1/4 : (scoreD'=1) & (pretD'=false) & (nbTirsD'=nbTirsD+1) + 
-				(1-(1/10+1/6+1/4)) : (scoreD'=0) & (pretD'=false) & (nbTirsD'=nbTirsD+1) ;
-endmodule
 
 module Brigitte
 	scoreB: [0..3];
 	nbTirsB : [0..100] init 0;
-	pretB : bool init true;
+	pretB : bool init false;
 	rateB: bool init false;
-	[initB] pretB=false & pretM=false & nbTirsB < 100  -> 1/2 : (pretB'=true) +
-								1/2 : (pretB'=false);
+	[initB] pretB=false & pretM=false & nbTirsB < 100  -> (pretB'=true);
+	[initB] pretB=false & pretM=false & nbTirsB < 100  -> (pretB'=false);
 
 	[tirB] pretB= true & !rateB & !rateM & nbTirsB < 100  -> 1/8 : (scoreB' = 3) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
 								1/4 : (scoreB' = 2) & (pretB'=false) & (nbTirsB'=nbTirsB+1) +
@@ -34,11 +23,11 @@ endmodule
 
 module Marion
 	scoreM: [0..3];
-	pretM : bool;
+	pretM : bool init false;
 	rateM : bool init false;
 	nbTirsM: [0..100] init 0;
-	[initM] pretM=false & pretB=false & nbTirsM < 100  -> 1/2 : (pretM'=true) +
-								1/2 : (pretM'=false);
+	[initM] pretM=false & pretB=false & nbTirsM < 100  -> (pretM'=true);
+	[initM] pretM=false & pretB=false & nbTirsM < 100  -> (pretM'=false);
 
 	[tirM] pretM=true & nbTirsM+nbTirsB < 4 & nbTirsM < 100 -> 1/16 : (scoreM' = 3) & (pretM'=false) & (nbTirsM' = nbTirsM+1) & (rateM'=false) +
 									1/6 : (scoreM' = 2) & (pretM'=false) & (nbTirsM' = nbTirsM+1) & (rateM'=false) +
@@ -52,6 +41,6 @@ module Marion
 endmodule
 
 rewards
-	[initB] true : scoreB;
-	[initM] true : scoreM;
+	[initB] true : scoreM;
+	[initM] true: scoreB;
 endrewards

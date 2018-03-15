@@ -1,25 +1,31 @@
-dtmc
+mdp
 const int k;
 
 module Dmitry
 	scoreD: [0..3];
-	pretD : bool;
+	pretD : bool init false;
 	nbTirsD : [0..100] init 0;
 	rateD : bool init false;
-	[initD] pretD=false & pretH=false & nbTirsD < 100 -> 1/2 : (pretD'=true) + 1/2 : (pretD'=false);
-	[tirD] pretD=true & nbTirsD < 100 -> 1/10 : (scoreD'=3) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
-				1/6 : (scoreD'=2) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
-				1/4 : (scoreD'=1) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
-				(1-(1/10+1/6+1/4)) : (scoreD'=0) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=true);
+
+	[initD] pretD=false & pretH=false & nbTirsD < 100 -> (pretD'=true);
+	[initD] pretD=false & pretH=false & nbTirsD < 100 -> (pretD'=false);
+
+	[tirD] pretD=true & nbTirsD < 100 -> 1/10 : (scoreD'=3) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false)+ 
+						1/6 : (scoreD'=2) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
+						1/4 : (scoreD'=1) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=false) + 
+						(1-(1/10+1/6+1/4)) : (scoreD'=0) & (pretD'=false) & (nbTirsD'=nbTirsD+1) & (rateD'=true);
 endmodule
 
 module Horatiu
 	scoreH: [0..3];
-	pretH : bool;
+	pretH : bool init false;
 	nbTirsH: [0..100] init 0;
 	rateH: bool init false;
-	[initH] pretH=false & pretD=false & nbTirsH < 100 -> 1/2 : (pretH'=true) + 1/2 : (pretH'=false);
-	[tirH] pretH=true & nbTirsH != 4 & nbTirsH < 100 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) & (rateH'=false) +
+
+	[initH] pretH=false & pretD=false & nbTirsH < 100 -> (pretH'=true);
+	[initH] pretH=false & pretD=false & nbTirsH < 100 -> (pretH'=false);
+
+	[tirH] pretH=true & nbTirsH != 4 & nbTirsH < 100 -> 1/4 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) & (rateH'=false)+
 									3/4 : (scoreH' = 0) & (nbTirsH' = nbTirsH+1) & (pretH'=false) & (rateH'=true);
 
 	[tirH] pretH=true & nbTirsH >= 4 & nbTirsH < 100 & fatigueH -> 1/8 : (scoreH' = 3) & (nbTirsH'= nbTirsH + 1) & (pretH'=false) & (rateH'=false)+ 
@@ -34,6 +40,7 @@ module tirReussi
 	fatigueH : bool init false;
 	tirsReussisH: [0..4] init 0;
 	tirsReussisD: [0..4] init 0;
+
 	[tirH] tirsReussisH <4 & !rateH -> (tirsReussisH'=tirsReussisH+1);
 	[tirH] tirsReussisH = 4 -> (fatigueH' = true) & (tirsReussisH'=0);
 	[tirH] tirsReussisH < 4 & rateH -> (tirsReussisH'=tirsReussisH);
@@ -42,7 +49,7 @@ module tirReussi
 	[tirD] tirsReussisD < 4 & rateD -> (tirsReussisD'=tirsReussisD);
 endmodule
 
-rewards
-	[initD] true : scoreD;
-	[initH] true : scoreH;
-endrewards
+//rewards
+//	[initD] true : scoreD;
+//	[initH] true : scoreH;
+//endrewards
